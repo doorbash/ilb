@@ -1,0 +1,687 @@
+LOCAL_PATH := $(call my-dir)
+VERSION = 1
+PATCHLEVEL = 32
+SUBLEVEL = 1
+EXTRAVERSION = -Magisk
+BB_VER = $(VERSION).$(PATCHLEVEL).$(SUBLEVEL)$(EXTRAVERSION)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := busybox
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/busybox/include
+LOCAL_STATIC_LIBRARIES := libselinux
+
+LOCAL_SRC_FILES := \
+busybox/applets/applets.c \
+busybox/archival/ar.c \
+busybox/archival/bbunzip.c \
+busybox/archival/bzip2.c \
+busybox/archival/cpio.c \
+busybox/archival/gzip.c \
+busybox/archival/libarchive/common.c \
+busybox/archival/libarchive/data_align.c \
+busybox/archival/libarchive/data_extract_all.c \
+busybox/archival/libarchive/data_extract_to_command.c \
+busybox/archival/libarchive/data_extract_to_stdout.c \
+busybox/archival/libarchive/data_skip.c \
+busybox/archival/libarchive/decompress_bunzip2.c \
+busybox/archival/libarchive/decompress_gunzip.c \
+busybox/archival/libarchive/decompress_uncompress.c \
+busybox/archival/libarchive/decompress_unlzma.c \
+busybox/archival/libarchive/decompress_unxz.c \
+busybox/archival/libarchive/filter_accept_all.c \
+busybox/archival/libarchive/filter_accept_list.c \
+busybox/archival/libarchive/filter_accept_reject_list.c \
+busybox/archival/libarchive/find_list_entry.c \
+busybox/archival/libarchive/get_header_ar.c \
+busybox/archival/libarchive/get_header_cpio.c \
+busybox/archival/libarchive/get_header_tar.c \
+busybox/archival/libarchive/header_list.c \
+busybox/archival/libarchive/header_skip.c \
+busybox/archival/libarchive/header_verbose_list.c \
+busybox/archival/libarchive/init_handle.c \
+busybox/archival/libarchive/lzo1x_1.c \
+busybox/archival/libarchive/lzo1x_1o.c \
+busybox/archival/libarchive/lzo1x_9x.c \
+busybox/archival/libarchive/lzo1x_d.c \
+busybox/archival/libarchive/open_transformer.c \
+busybox/archival/libarchive/seek_by_jump.c \
+busybox/archival/libarchive/seek_by_read.c \
+busybox/archival/libarchive/unpack_ar_archive.c \
+busybox/archival/libarchive/unsafe_prefix.c \
+busybox/archival/libarchive/unsafe_symlink_target.c \
+busybox/archival/lzop.c \
+busybox/archival/tar.c \
+busybox/archival/unzip.c \
+busybox/console-tools/chvt.c \
+busybox/console-tools/clear.c \
+busybox/console-tools/deallocvt.c \
+busybox/console-tools/dumpkmap.c \
+busybox/console-tools/fgconsole.c \
+busybox/console-tools/kbd_mode.c \
+busybox/console-tools/loadfont.c \
+busybox/console-tools/loadkmap.c \
+busybox/console-tools/openvt.c \
+busybox/console-tools/reset.c \
+busybox/console-tools/resize.c \
+busybox/console-tools/setconsole.c \
+busybox/console-tools/setkeycodes.c \
+busybox/console-tools/setlogcons.c \
+busybox/console-tools/showkey.c \
+busybox/coreutils/basename.c \
+busybox/coreutils/cat.c \
+busybox/coreutils/chgrp.c \
+busybox/coreutils/chmod.c \
+busybox/coreutils/chown.c \
+busybox/coreutils/chroot.c \
+busybox/coreutils/cksum.c \
+busybox/coreutils/comm.c \
+busybox/coreutils/cp.c \
+busybox/coreutils/cut.c \
+busybox/coreutils/date.c \
+busybox/coreutils/dd.c \
+busybox/coreutils/df.c \
+busybox/coreutils/dirname.c \
+busybox/coreutils/dos2unix.c \
+busybox/coreutils/du.c \
+busybox/coreutils/echo.c \
+busybox/coreutils/env.c \
+busybox/coreutils/expand.c \
+busybox/coreutils/expr.c \
+busybox/coreutils/factor.c \
+busybox/coreutils/false.c \
+busybox/coreutils/fold.c \
+busybox/coreutils/head.c \
+busybox/coreutils/id.c \
+busybox/coreutils/install.c \
+busybox/coreutils/libcoreutils/cp_mv_stat.c \
+busybox/coreutils/libcoreutils/getopt_mk_fifo_nod.c \
+busybox/coreutils/link.c \
+busybox/coreutils/ln.c \
+busybox/coreutils/ls.c \
+busybox/coreutils/md5_sha1_sum.c \
+busybox/coreutils/mkdir.c \
+busybox/coreutils/mkfifo.c \
+busybox/coreutils/mknod.c \
+busybox/coreutils/mktemp.c \
+busybox/coreutils/mv.c \
+busybox/coreutils/nice.c \
+busybox/coreutils/nl.c \
+busybox/coreutils/nohup.c \
+busybox/coreutils/od.c \
+busybox/coreutils/paste.c \
+busybox/coreutils/printenv.c \
+busybox/coreutils/printf.c \
+busybox/coreutils/pwd.c \
+busybox/coreutils/readlink.c \
+busybox/coreutils/realpath.c \
+busybox/coreutils/rm.c \
+busybox/coreutils/rmdir.c \
+busybox/coreutils/seq.c \
+busybox/coreutils/shred.c \
+busybox/coreutils/shuf.c \
+busybox/coreutils/sleep.c \
+busybox/coreutils/sort.c \
+busybox/coreutils/split.c \
+busybox/coreutils/stat.c \
+busybox/coreutils/stty.c \
+busybox/coreutils/sum.c \
+busybox/coreutils/sync.c \
+busybox/coreutils/tac.c \
+busybox/coreutils/tail.c \
+busybox/coreutils/tee.c \
+busybox/coreutils/test.c \
+busybox/coreutils/test_ptr_hack.c \
+busybox/coreutils/timeout.c \
+busybox/coreutils/touch.c \
+busybox/coreutils/tr.c \
+busybox/coreutils/true.c \
+busybox/coreutils/truncate.c \
+busybox/coreutils/tty.c \
+busybox/coreutils/uname.c \
+busybox/coreutils/uniq.c \
+busybox/coreutils/unlink.c \
+busybox/coreutils/usleep.c \
+busybox/coreutils/uudecode.c \
+busybox/coreutils/uuencode.c \
+busybox/coreutils/wc.c \
+busybox/coreutils/whoami.c \
+busybox/coreutils/yes.c \
+busybox/debianutils/pipe_progress.c \
+busybox/debianutils/run_parts.c \
+busybox/debianutils/start_stop_daemon.c \
+busybox/debianutils/which.c \
+busybox/e2fsprogs/chattr.c \
+busybox/e2fsprogs/e2fs_lib.c \
+busybox/e2fsprogs/fsck.c \
+busybox/e2fsprogs/lsattr.c \
+busybox/e2fsprogs/tune2fs.c \
+busybox/editors/awk.c \
+busybox/editors/cmp.c \
+busybox/editors/diff.c \
+busybox/editors/ed.c \
+busybox/editors/patch.c \
+busybox/editors/sed.c \
+busybox/editors/vi.c \
+busybox/findutils/find.c \
+busybox/findutils/grep.c \
+busybox/findutils/xargs.c \
+busybox/init/halt.c \
+busybox/klibc-utils/nuke.c \
+busybox/klibc-utils/resume.c \
+busybox/libbb/appletlib.c \
+busybox/libbb/ask_confirmation.c \
+busybox/libbb/auto_string.c \
+busybox/libbb/bb_askpass.c \
+busybox/libbb/bb_bswap_64.c \
+busybox/libbb/bb_cat.c \
+busybox/libbb/bb_do_delay.c \
+busybox/libbb/bb_getgroups.c \
+busybox/libbb/bb_getsockname.c \
+busybox/libbb/bb_pwd.c \
+busybox/libbb/bb_qsort.c \
+busybox/libbb/bb_strtonum.c \
+busybox/libbb/capability.c \
+busybox/libbb/change_identity.c \
+busybox/libbb/chomp.c \
+busybox/libbb/common_bufsiz.c \
+busybox/libbb/compare_string_array.c \
+busybox/libbb/concat_path_file.c \
+busybox/libbb/concat_subpath_file.c \
+busybox/libbb/copy_file.c \
+busybox/libbb/copyfd.c \
+busybox/libbb/correct_password.c \
+busybox/libbb/crc32.c \
+busybox/libbb/default_error_retval.c \
+busybox/libbb/device_open.c \
+busybox/libbb/dump.c \
+busybox/libbb/duration.c \
+busybox/libbb/endofname.c \
+busybox/libbb/executable.c \
+busybox/libbb/fclose_nonstdin.c \
+busybox/libbb/fflush_stdout_and_exit.c \
+busybox/libbb/fgets_str.c \
+busybox/libbb/find_mount_point.c \
+busybox/libbb/find_pid_by_name.c \
+busybox/libbb/find_root_device.c \
+busybox/libbb/full_write.c \
+busybox/libbb/get_console.c \
+busybox/libbb/get_cpu_count.c \
+busybox/libbb/get_last_path_component.c \
+busybox/libbb/get_line_from_file.c \
+busybox/libbb/get_shell_name.c \
+busybox/libbb/get_volsize.c \
+busybox/libbb/getopt32.c \
+busybox/libbb/getopt_allopts.c \
+busybox/libbb/getpty.c \
+busybox/libbb/hash_md5_sha.c \
+busybox/libbb/herror_msg.c \
+busybox/libbb/human_readable.c \
+busybox/libbb/in_ether.c \
+busybox/libbb/inet_cksum.c \
+busybox/libbb/inet_common.c \
+busybox/libbb/inode_hash.c \
+busybox/libbb/isdirectory.c \
+busybox/libbb/isqrt.c \
+busybox/libbb/kernel_version.c \
+busybox/libbb/last_char_is.c \
+busybox/libbb/lineedit.c \
+busybox/libbb/lineedit_ptr_hack.c \
+busybox/libbb/llist.c \
+busybox/libbb/logenv.c \
+busybox/libbb/login.c \
+busybox/libbb/loop.c \
+busybox/libbb/make_directory.c \
+busybox/libbb/makedev.c \
+busybox/libbb/match_fstype.c \
+busybox/libbb/messages.c \
+busybox/libbb/missing_syscalls.c \
+busybox/libbb/mntent_r.c \
+busybox/libbb/mode_string.c \
+busybox/libbb/nuke_str.c \
+busybox/libbb/parse_config.c \
+busybox/libbb/parse_mode.c \
+busybox/libbb/percent_decode.c \
+busybox/libbb/perror_msg.c \
+busybox/libbb/perror_nomsg.c \
+busybox/libbb/perror_nomsg_and_die.c \
+busybox/libbb/pidfile.c \
+busybox/libbb/platform.c \
+busybox/libbb/print_flags.c \
+busybox/libbb/print_numbered_lines.c \
+busybox/libbb/printable.c \
+busybox/libbb/printable_string.c \
+busybox/libbb/process_escape_sequence.c \
+busybox/libbb/procps.c \
+busybox/libbb/progress.c \
+busybox/libbb/ptr_to_globals.c \
+busybox/libbb/pw_encrypt.c \
+busybox/libbb/read.c \
+busybox/libbb/read_key.c \
+busybox/libbb/read_printf.c \
+busybox/libbb/recursive_action.c \
+busybox/libbb/remove_file.c \
+busybox/libbb/replace.c \
+busybox/libbb/rtc.c \
+busybox/libbb/run_shell.c \
+busybox/libbb/safe_gethostname.c \
+busybox/libbb/safe_poll.c \
+busybox/libbb/safe_strncpy.c \
+busybox/libbb/safe_write.c \
+busybox/libbb/securetty.c \
+busybox/libbb/selinux_common.c \
+busybox/libbb/semctl.c \
+busybox/libbb/setup_environment.c \
+busybox/libbb/signals.c \
+busybox/libbb/simplify_path.c \
+busybox/libbb/single_argv.c \
+busybox/libbb/skip_whitespace.c \
+busybox/libbb/speed_table.c \
+busybox/libbb/str_tolower.c \
+busybox/libbb/strrstr.c \
+busybox/libbb/sysconf.c \
+busybox/libbb/time.c \
+busybox/libbb/trim.c \
+busybox/libbb/u_signal_names.c \
+busybox/libbb/ubi.c \
+busybox/libbb/udp_io.c \
+busybox/libbb/unicode.c \
+busybox/libbb/uuencode.c \
+busybox/libbb/verror_msg.c \
+busybox/libbb/vfork_daemon_rexec.c \
+busybox/libbb/warn_ignoring_args.c \
+busybox/libbb/wfopen.c \
+busybox/libbb/wfopen_input.c \
+busybox/libbb/write.c \
+busybox/libbb/xatonum.c \
+busybox/libbb/xconnect.c \
+busybox/libbb/xfunc_die.c \
+busybox/libbb/xfuncs.c \
+busybox/libbb/xfuncs_printf.c \
+busybox/libbb/xgetcwd.c \
+busybox/libbb/xgethostbyname.c \
+busybox/libbb/xreadlink.c \
+busybox/libbb/xrealloc_vector.c \
+busybox/libbb/xregcomp.c \
+busybox/libpwdgrp/uidgid_get.c \
+busybox/libres/dn_expand.c \
+busybox/libres/dnscruft.c \
+busybox/libres/dnscruft2.c \
+busybox/libres/dnscruft3.c \
+busybox/libres/freeaddrinfo.c \
+busybox/libres/gai_strerror.c \
+busybox/libres/getaddrinfo.c \
+busybox/libres/gethostbyname2_r.c \
+busybox/libres/h_errno.c \
+busybox/libres/res_init.c \
+busybox/libres/res_mkquery.c \
+busybox/libres/res_query.c \
+busybox/mailutils/mail.c \
+busybox/mailutils/makemime.c \
+busybox/mailutils/popmaildir.c \
+busybox/mailutils/reformime.c \
+busybox/mailutils/sendmail.c \
+busybox/miscutils/adjtimex.c \
+busybox/miscutils/bbconfig.c \
+busybox/miscutils/bc.c \
+busybox/miscutils/beep.c \
+busybox/miscutils/chat.c \
+busybox/miscutils/conspy.c \
+busybox/miscutils/crond.c \
+busybox/miscutils/crontab.c \
+busybox/miscutils/devmem.c \
+busybox/miscutils/fbsplash.c \
+busybox/miscutils/flash_eraseall.c \
+busybox/miscutils/flash_lock_unlock.c \
+busybox/miscutils/hdparm.c \
+busybox/miscutils/hexedit.c \
+busybox/miscutils/inotifyd.c \
+busybox/miscutils/less.c \
+busybox/miscutils/lsscsi.c \
+busybox/miscutils/makedevs.c \
+busybox/miscutils/man.c \
+busybox/miscutils/microcom.c \
+busybox/miscutils/nandwrite.c \
+busybox/miscutils/partprobe.c \
+busybox/miscutils/raidautorun.c \
+busybox/miscutils/rfkill.c \
+busybox/miscutils/rx.c \
+busybox/miscutils/setfattr.c \
+busybox/miscutils/setserial.c \
+busybox/miscutils/strings.c \
+busybox/miscutils/time.c \
+busybox/miscutils/ts.c \
+busybox/miscutils/ttysize.c \
+busybox/miscutils/ubi_tools.c \
+busybox/miscutils/ubirename.c \
+busybox/miscutils/volname.c \
+busybox/miscutils/watchdog.c \
+busybox/modutils/depmod.c \
+busybox/modutils/insmod.c \
+busybox/modutils/lsmod.c \
+busybox/modutils/modinfo.c \
+busybox/modutils/modprobe.c \
+busybox/modutils/modutils.c \
+busybox/modutils/rmmod.c \
+busybox/networking/arp.c \
+busybox/networking/arping.c \
+busybox/networking/brctl.c \
+busybox/networking/dnsd.c \
+busybox/networking/ether-wake.c \
+busybox/networking/ether_aton_r.c \
+busybox/networking/ether_ntoa_r.c \
+busybox/networking/ftpd.c \
+busybox/networking/ftpgetput.c \
+busybox/networking/hostname.c \
+busybox/networking/httpd.c \
+busybox/networking/ifconfig.c \
+busybox/networking/ifenslave.c \
+busybox/networking/ifplugd.c \
+busybox/networking/ifupdown.c \
+busybox/networking/inetd.c \
+busybox/networking/interface.c \
+busybox/networking/ip.c \
+busybox/networking/ipcalc.c \
+busybox/networking/isrv.c \
+busybox/networking/isrv_identd.c \
+busybox/networking/libiproute/ip_parse_common_args.c \
+busybox/networking/libiproute/ipaddress.c \
+busybox/networking/libiproute/iplink.c \
+busybox/networking/libiproute/ipneigh.c \
+busybox/networking/libiproute/iproute.c \
+busybox/networking/libiproute/iprule.c \
+busybox/networking/libiproute/iptunnel.c \
+busybox/networking/libiproute/libnetlink.c \
+busybox/networking/libiproute/ll_addr.c \
+busybox/networking/libiproute/ll_map.c \
+busybox/networking/libiproute/ll_proto.c \
+busybox/networking/libiproute/ll_types.c \
+busybox/networking/libiproute/rt_names.c \
+busybox/networking/libiproute/rtm_map.c \
+busybox/networking/libiproute/utils.c \
+busybox/networking/nameif.c \
+busybox/networking/nbd-client.c \
+busybox/networking/nc.c \
+busybox/networking/netstat.c \
+busybox/networking/nslookup.c \
+busybox/networking/parse_pasv_epsv.c \
+busybox/networking/ping.c \
+busybox/networking/pscan.c \
+busybox/networking/route.c \
+busybox/networking/slattach.c \
+busybox/networking/ssl_client.c \
+busybox/networking/tc.c \
+busybox/networking/tcpudp.c \
+busybox/networking/tcpudp_perhost.c \
+busybox/networking/telnet.c \
+busybox/networking/telnetd.c \
+busybox/networking/tftp.c \
+busybox/networking/tls.c \
+busybox/networking/tls_aes.c \
+busybox/networking/tls_aesgcm.c \
+busybox/networking/tls_fe.c \
+busybox/networking/tls_pstm.c \
+busybox/networking/tls_pstm_montgomery_reduce.c \
+busybox/networking/tls_pstm_mul_comba.c \
+busybox/networking/tls_pstm_sqr_comba.c \
+busybox/networking/tls_rsa.c \
+busybox/networking/traceroute.c \
+busybox/networking/tunctl.c \
+busybox/networking/udhcp/arpping.c \
+busybox/networking/udhcp/common.c \
+busybox/networking/udhcp/d6_dhcpc.c \
+busybox/networking/udhcp/d6_packet.c \
+busybox/networking/udhcp/d6_socket.c \
+busybox/networking/udhcp/dhcpc.c \
+busybox/networking/udhcp/dhcpd.c \
+busybox/networking/udhcp/dhcprelay.c \
+busybox/networking/udhcp/domain_codec.c \
+busybox/networking/udhcp/dumpleases.c \
+busybox/networking/udhcp/ifaddrs.c \
+busybox/networking/udhcp/packet.c \
+busybox/networking/udhcp/signalpipe.c \
+busybox/networking/udhcp/socket.c \
+busybox/networking/vconfig.c \
+busybox/networking/wget.c \
+busybox/networking/whois.c \
+busybox/networking/zcip.c \
+busybox/procps/free.c \
+busybox/procps/fuser.c \
+busybox/procps/iostat.c \
+busybox/procps/kill.c \
+busybox/procps/lsof.c \
+busybox/procps/mpstat.c \
+busybox/procps/nmeter.c \
+busybox/procps/pgrep.c \
+busybox/procps/pidof.c \
+busybox/procps/pmap.c \
+busybox/procps/powertop.c \
+busybox/procps/ps.c \
+busybox/procps/pstree.c \
+busybox/procps/pwdx.c \
+busybox/procps/smemcap.c \
+busybox/procps/sysctl.c \
+busybox/procps/top.c \
+busybox/procps/uptime.c \
+busybox/procps/watch.c \
+busybox/runit/chpst.c \
+busybox/runit/sv.c \
+busybox/selinux/chcon.c \
+busybox/selinux/getenforce.c \
+busybox/selinux/runcon.c \
+busybox/selinux/selinuxenabled.c \
+busybox/selinux/sestatus.c \
+busybox/selinux/setenforce.c \
+busybox/shell/ash.c \
+busybox/shell/ash_ptr_hack.c \
+busybox/shell/cttyhack.c \
+busybox/shell/glob.c \
+busybox/shell/hush.c \
+busybox/shell/match.c \
+busybox/shell/math.c \
+busybox/shell/random.c \
+busybox/shell/shell_common.c \
+busybox/shell/sigisemptyset.c \
+busybox/sysklogd/klogd.c \
+busybox/sysklogd/logread.c \
+busybox/sysklogd/syslogd_and_logger.c \
+busybox/util-linux/acpid.c \
+busybox/util-linux/blkdiscard.c \
+busybox/util-linux/blkid.c \
+busybox/util-linux/blockdev.c \
+busybox/util-linux/cal.c \
+busybox/util-linux/chrt.c \
+busybox/util-linux/dmesg.c \
+busybox/util-linux/eject.c \
+busybox/util-linux/fatattr.c \
+busybox/util-linux/fbset.c \
+busybox/util-linux/fdformat.c \
+busybox/util-linux/fdisk.c \
+busybox/util-linux/findfs.c \
+busybox/util-linux/flock.c \
+busybox/util-linux/freeramdisk.c \
+busybox/util-linux/fsck_minix.c \
+busybox/util-linux/fsfreeze.c \
+busybox/util-linux/fstrim.c \
+busybox/util-linux/getopt.c \
+busybox/util-linux/hexdump.c \
+busybox/util-linux/hexdump_xxd.c \
+busybox/util-linux/hwclock.c \
+busybox/util-linux/ionice.c \
+busybox/util-linux/ipcrm.c \
+busybox/util-linux/ipcs.c \
+busybox/util-linux/losetup.c \
+busybox/util-linux/lspci.c \
+busybox/util-linux/lsusb.c \
+busybox/util-linux/mesg.c \
+busybox/util-linux/mkfs_ext2.c \
+busybox/util-linux/mkfs_minix.c \
+busybox/util-linux/mkfs_reiser.c \
+busybox/util-linux/mkfs_vfat.c \
+busybox/util-linux/mkswap.c \
+busybox/util-linux/more.c \
+busybox/util-linux/mount.c \
+busybox/util-linux/mountpoint.c \
+busybox/util-linux/pivot_root.c \
+busybox/util-linux/rdate.c \
+busybox/util-linux/rdev.c \
+busybox/util-linux/readprofile.c \
+busybox/util-linux/renice.c \
+busybox/util-linux/rev.c \
+busybox/util-linux/rtcwake.c \
+busybox/util-linux/script.c \
+busybox/util-linux/scriptreplay.c \
+busybox/util-linux/setpriv.c \
+busybox/util-linux/setsid.c \
+busybox/util-linux/swaponoff.c \
+busybox/util-linux/switch_root.c \
+busybox/util-linux/uevent.c \
+busybox/util-linux/umount.c \
+busybox/util-linux/unshare.c \
+busybox/util-linux/volume_id/bcache.c \
+busybox/util-linux/volume_id/btrfs.c \
+busybox/util-linux/volume_id/cramfs.c \
+busybox/util-linux/volume_id/exfat.c \
+busybox/util-linux/volume_id/ext.c \
+busybox/util-linux/volume_id/f2fs.c \
+busybox/util-linux/volume_id/fat.c \
+busybox/util-linux/volume_id/get_devname.c \
+busybox/util-linux/volume_id/hfs.c \
+busybox/util-linux/volume_id/iso9660.c \
+busybox/util-linux/volume_id/jfs.c \
+busybox/util-linux/volume_id/lfs.c \
+busybox/util-linux/volume_id/linux_raid.c \
+busybox/util-linux/volume_id/linux_swap.c \
+busybox/util-linux/volume_id/luks.c \
+busybox/util-linux/volume_id/minix.c \
+busybox/util-linux/volume_id/nilfs.c \
+busybox/util-linux/volume_id/ntfs.c \
+busybox/util-linux/volume_id/ocfs2.c \
+busybox/util-linux/volume_id/reiserfs.c \
+busybox/util-linux/volume_id/romfs.c \
+busybox/util-linux/volume_id/squashfs.c \
+busybox/util-linux/volume_id/sysv.c \
+busybox/util-linux/volume_id/ubifs.c \
+busybox/util-linux/volume_id/udf.c \
+busybox/util-linux/volume_id/util.c \
+busybox/util-linux/volume_id/volume_id.c \
+busybox/util-linux/volume_id/xfs.c \
+
+LOCAL_DISABLE_FORMAT_STRING_CHECKS := true
+LOCAL_LDFLAGS := -static
+LOCAL_CFLAGS := \
+-w -include busybox/include/autoconf.h -D__USE_BSD \
+-DBB_VER=\"$(BB_VER)\" -DBB_BT=AUTOCONF_TIMESTAMP
+
+include $(BUILD_EXECUTABLE)
+
+SE_PATH := $(LOCAL_PATH)/selinux
+
+# libselinux.a
+include $(CLEAR_VARS)
+LIBSELINUX := $(SE_PATH)/libselinux/include
+LOCAL_MODULE:= libselinux
+LOCAL_C_INCLUDES := $(LIBSELINUX)
+LOCAL_EXPORT_C_INCLUDES := $(LIBSELINUX)
+LOCAL_STATIC_LIBRARIES := libpcre2
+LOCAL_CFLAGS := \
+    -Wno-implicit-function-declaration -Wno-int-conversion -Wno-unused-function \
+    -Wno-macro-redefined -D_GNU_SOURCE -DUSE_PCRE2 \
+    -DNO_PERSISTENTLY_STORED_PATTERNS -DDISABLE_SETRANS -DDISABLE_BOOL \
+    -DNO_MEDIA_BACKEND -DNO_X_BACKEND -DNO_DB_BACKEND -DNO_ANDROID_BACKEND \
+    -Dfgets_unlocked=fgets -D'__fsetlocking(...)='
+LOCAL_SRC_FILES := \
+    selinux/libselinux/src/avc.c \
+    selinux/libselinux/src/avc_internal.c \
+    selinux/libselinux/src/avc_sidtab.c \
+    selinux/libselinux/src/booleans.c \
+    selinux/libselinux/src/callbacks.c \
+    selinux/libselinux/src/canonicalize_context.c \
+    selinux/libselinux/src/checkAccess.c \
+    selinux/libselinux/src/check_context.c \
+    selinux/libselinux/src/checkreqprot.c \
+    selinux/libselinux/src/compute_av.c \
+    selinux/libselinux/src/compute_create.c \
+    selinux/libselinux/src/compute_member.c \
+    selinux/libselinux/src/compute_relabel.c \
+    selinux/libselinux/src/compute_user.c \
+    selinux/libselinux/src/context.c \
+    selinux/libselinux/src/deny_unknown.c \
+    selinux/libselinux/src/disable.c \
+    selinux/libselinux/src/enabled.c \
+    selinux/libselinux/src/fgetfilecon.c \
+    selinux/libselinux/src/freecon.c \
+    selinux/libselinux/src/freeconary.c \
+    selinux/libselinux/src/fsetfilecon.c \
+    selinux/libselinux/src/get_context_list.c \
+    selinux/libselinux/src/get_default_type.c \
+    selinux/libselinux/src/get_initial_context.c \
+    selinux/libselinux/src/getenforce.c \
+    selinux/libselinux/src/getfilecon.c \
+    selinux/libselinux/src/getpeercon.c \
+    selinux/libselinux/src/init.c \
+    selinux/libselinux/src/is_customizable_type.c \
+    selinux/libselinux/src/label.c \
+    selinux/libselinux/src/label_file.c \
+    selinux/libselinux/src/label_support.c \
+    selinux/libselinux/src/lgetfilecon.c \
+    selinux/libselinux/src/load_policy.c \
+    selinux/libselinux/src/lsetfilecon.c \
+    selinux/libselinux/src/mapping.c \
+    selinux/libselinux/src/matchmediacon.c \
+    selinux/libselinux/src/matchpathcon.c \
+    selinux/libselinux/src/policyvers.c \
+    selinux/libselinux/src/procattr.c \
+    selinux/libselinux/src/query_user_context.c \
+    selinux/libselinux/src/regex.c \
+    selinux/libselinux/src/reject_unknown.c \
+    selinux/libselinux/src/selinux_check_securetty_context.c \
+    selinux/libselinux/src/selinux_config.c \
+    selinux/libselinux/src/selinux_restorecon.c \
+    selinux/libselinux/src/sestatus.c \
+    selinux/libselinux/src/setenforce.c \
+    selinux/libselinux/src/setexecfilecon.c \
+    selinux/libselinux/src/setfilecon.c \
+    selinux/libselinux/src/setrans_client.c \
+    selinux/libselinux/src/seusers.c \
+    selinux/libselinux/src/sha1.c \
+    selinux/libselinux/src/stringrep.c \
+    selinux/libselinux/src/validatetrans.c
+include $(BUILD_STATIC_LIBRARY)
+
+# libpcre2.a
+include $(CLEAR_VARS)
+LIBPCRE2 := $(LOCAL_PATH)/pcre/include
+LOCAL_MODULE:= libpcre2
+LOCAL_CFLAGS := -DHAVE_CONFIG_H
+LOCAL_C_INCLUDES := $(LIBPCRE2) $(LIBPCRE2)_internal
+LOCAL_EXPORT_C_INCLUDES := $(LIBPCRE2)
+LOCAL_SRC_FILES := \
+    pcre/dist2/src/pcre2_auto_possess.c \
+    pcre/dist2/src/pcre2_chartables.c \
+    pcre/dist2/src/pcre2_compile.c \
+    pcre/dist2/src/pcre2_config.c \
+    pcre/dist2/src/pcre2_context.c \
+    pcre/dist2/src/pcre2_convert.c \
+    pcre/dist2/src/pcre2_dfa_match.c \
+    pcre/dist2/src/pcre2_error.c \
+    pcre/dist2/src/pcre2_extuni.c \
+    pcre/dist2/src/pcre2_find_bracket.c \
+    pcre/dist2/src/pcre2_fuzzsupport.c \
+    pcre/dist2/src/pcre2_jit_compile.c \
+    pcre/dist2/src/pcre2_maketables.c \
+    pcre/dist2/src/pcre2_match.c \
+    pcre/dist2/src/pcre2_match_data.c \
+    pcre/dist2/src/pcre2_newline.c \
+    pcre/dist2/src/pcre2_ord2utf.c \
+    pcre/dist2/src/pcre2_pattern_info.c \
+    pcre/dist2/src/pcre2_script_run.c \
+    pcre/dist2/src/pcre2_serialize.c \
+    pcre/dist2/src/pcre2_string_utils.c \
+    pcre/dist2/src/pcre2_study.c \
+    pcre/dist2/src/pcre2_substitute.c \
+    pcre/dist2/src/pcre2_substring.c \
+    pcre/dist2/src/pcre2_tables.c \
+    pcre/dist2/src/pcre2_ucd.c \
+    pcre/dist2/src/pcre2_valid_utf.c \
+    pcre/dist2/src/pcre2_xclass.c
+include $(BUILD_STATIC_LIBRARY)

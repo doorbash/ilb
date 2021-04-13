@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="io.github.doorbash.ilb.model.PublicIP" />
+
+        <variable
+            name="item"
+            type="PublicIP" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/WidgetFoundation.Card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/l_25"
+            android:layout_marginBottom="@dimen/l_25"
+            android:focusable="false"
+            app:cardBackgroundColor="@android:color/transparent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/l_50">
+
+                <TextView
+                    android:id="@+id/public_ip_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{item.publicIPv4}"
+                    android:textAppearance="@style/AppearanceFoundation.Title"
+                    android:textColor="?colorPrimary"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="8.8.8.8" />
+
+                <TextView
+                    android:id="@+id/home_interface_name"
+                    style="@style/W.Home.ItemContent"
+                    android:layout_marginTop="@dimen/l_50"
+                    android:text="Interface"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/public_ip_title" />
+
+                <TextView
+                    style="@style/W.Home.ItemContent.Right"
+                    android:text="@{item.iface}"
+                    app:layout_constraintBottom_toBottomOf="@id/home_interface_name"
+                    app:layout_constraintStart_toEndOf="@id/home_interface_name"
+                    app:layout_constraintTop_toTopOf="@id/home_interface_name"
+                    tools:text="wlan0" />
+
+
+                <TextView
+                    android:id="@+id/home_interface_mark"
+                    style="@style/W.Home.ItemContent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mark"
+                    android:visibility="visible"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/home_interface_name" />
+
+                <TextView
+                    style="@style/W.Home.ItemContent.Right"
+                    android:text="@{item.mark}"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="@id/home_interface_mark"
+                    app:layout_constraintStart_toEndOf="@id/home_interface_mark"
+                    app:layout_constraintTop_toTopOf="@id/home_interface_mark"
+                    tools:text="0x6" />
+
+                <TextView
+                    android:id="@+id/home_interface_mac"
+                    style="@style/W.Home.ItemContent"
+                    gone="@{item.mac == ``}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mac Address"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/home_interface_mark" />
+
+                <TextView
+                    style="@style/W.Home.ItemContent.Right"
+                    gone="@{item.mac == ``}"
+                    android:text="@{item.mac}"
+                    app:layout_constraintBottom_toBottomOf="@id/home_interface_mac"
+                    app:layout_constraintStart_toEndOf="@id/home_interface_mac"
+                    app:layout_constraintTop_toTopOf="@id/home_interface_mac"
+                    tools:text="ff:ff:ff:ff:ff:ff" />
+
+                <TextView
+                    android:id="@+id/home_interface_ipv4"
+                    style="@style/W.Home.ItemContent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="IP Address"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/home_interface_mac" />
+
+                <TextView
+                    style="@style/W.Home.ItemContent.Right"
+                    android:text="@{item.ipv4AndMask}"
+                    app:layout_constraintBottom_toBottomOf="@id/home_interface_ipv4"
+                    app:layout_constraintStart_toEndOf="@id/home_interface_ipv4"
+                    app:layout_constraintTop_toTopOf="@id/home_interface_ipv4"
+                    tools:text="192.168.1.3/24" />
+
+                <TextView
+                    android:id="@+id/home_interface_txrx"
+                    style="@style/W.Home.ItemContent"
+                    android:text="TX/RX"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/home_interface_ipv4" />
+
+                <TextView
+                    style="@style/W.Home.ItemContent.Right"
+                    android:text="@{item.txs + ` / ` + item.rxs}"
+                    app:layout_constraintBottom_toBottomOf="@id/home_interface_txrx"
+                    app:layout_constraintStart_toEndOf="@id/home_interface_txrx"
+                    app:layout_constraintTop_toTopOf="@id/home_interface_txrx"
+                    tools:text="10 MB / 100MB" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+    </RelativeLayout>
+
+</layout>

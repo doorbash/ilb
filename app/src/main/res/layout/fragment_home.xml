@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="io.github.doorbash.ilb.ui.fragments.home.RootStatus" />
+        <import type="io.github.doorbash.ilb.ui.fragments.home.PublicIpsState" />
+
+        <variable
+            name="viewModel"
+            type="io.github.doorbash.ilb.ui.fragments.home.HomeViewModel" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.fragments.home.HomeFragment">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/l_50">
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/WidgetFoundation.Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/l1"
+                android:layout_marginEnd="@dimen/l1"
+                android:focusable="false">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            style="@style/WidgetFoundation.Icon"
+                            isSelected="@{viewModel.rootStatus == RootStatus.OK}"
+                            android:layout_marginStart="@dimen/l_25"
+                            app:srcCompat="@drawable/ic_check_circle_md2" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/l1"
+                            android:layout_weight="0.75"
+                            android:gravity="center_vertical"
+                            android:text="Root Access"
+                            android:textAppearance="@style/AppearanceFoundation.Body"
+                            android:textStyle="bold" />
+
+                        <Button
+                            style="@style/WidgetFoundation.Button.Text"
+                            gone="@{viewModel.rootStatus == RootStatus.PENDING || viewModel.publicIPsLoadingState != PublicIpsState.IDLE || viewModel.vpnRunning}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:onClick="@{() -> viewModel.rootStatus == RootStatus.OK ? viewModel.findPublicIps() : viewModel.checkRootAccess()}"
+                            android:text="@{viewModel.rootStatus == RootStatus.OK  ? `Next` : `Retry`}"
+                            app:icon="@{viewModel.rootStatus == RootStatus.OK ? @drawable/ic_forth_md2 : @drawable/ic_restart}"
+                            app:iconGravity="@{viewModel.rootStatus == RootStatus.OK ? `textEnd` : `textStart`}" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/root_notice_text"
+                        gone="@{viewModel.publicIPsLoadingState != PublicIpsState.IDLE || viewModel.vpnRunning}"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/l1"
+                        android:visibility="gone"
+                        android:text="@{viewModel.rootStatus == RootStatus.OK ? @string/root_status_ok : (viewModel.rootStatus == RootStatus.PENDING ? @string/root_status_pending : @string/root_status_error)}"
+                        android:textAppearance="@style/AppearanceFoundation.Caption"
+                        android:textColor="@{viewModel.rootStatus == RootStatus.OK ? `primary` : (viewModel.rootStatus == RootStatus.PENDING ? `onSurface` : `secondary`)}"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/WidgetFoundation.Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/l1"
+                android:layout_marginTop="@dimen/l1"
+                android:layout_marginEnd="@dimen/l1"
+                android:focusable="false">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            style="@style/WidgetFoundation.Icon"
+                            isSelected="@{viewModel.vpnRunning || viewModel.publicIPsLoadingState == PublicIpsState.OK}"
+                            android:layout_marginStart="@dimen/l_25"
+                            app:srcCompat="@drawable/ic_check_circle_md2" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/l1"
+                            android:layout_weight="0.75"
+                            android:gravity="center_vertical"
+                            android:text="Internet Connections"
+                            android:textAppearance="@style/AppearanceFoundation.Body"
+                            android:textStyle="bold" />
+
+                        <Button
+                            style="@style/WidgetFoundation.Button.Text"
+                            goneUnless="@{!viewModel.vpnRunning &amp;&amp; !viewModel.vpnStarting &amp;&amp; (viewModel.publicIPsLoadingState == PublicIpsState.OK || viewModel.publicIPsLoadingState == PublicIpsState.ERROR)}"
+                            isEnabled="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="@{() -> viewModel.publicIPsLoadingState == PublicIpsState.OK ? viewModel.startVPN() : viewModel.findPublicIps()}"
+                            android:text="@{viewModel.publicIPsLoadingState == PublicIpsState.OK ? `Let's go` : `Retry`}"
+                            app:icon="@{viewModel.publicIPsLoadingState == PublicIpsState.OK ? @drawable/ic_forth_md2 : @drawable/ic_restart}"
+                            app:iconGravity="@{viewModel.publicIPsLoadingState == PublicIpsState.OK ? `textEnd` : `textStart`}" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/finding_status_text"
+                        goneUnless="@{!viewModel.vpnRunning &amp;&amp; viewModel.publicIPsLoadingState != PublicIpsState.IDLE}"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/l1"
+                        android:visibility="gone"
+                        android:text="@{viewModel.findIpsText}"
+                        android:textAppearance="@style/AppearanceFoundation.Caption"
+                        android:textColor="@{viewModel.publicIPsLoadingState == PublicIpsState.OK ? `primary` : (viewModel.publicIPsLoadingState == PublicIpsState.ERROR ? `secondary` : `onSurface`)}"
+                        android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/public_ips"
+                        gone="@{viewModel.vpnRunning || viewModel.publicIPsLoadingState == PublicIpsState.IDLE || viewModel.publicIPsLoadingState == PublicIpsState.LOADING}"
+                        android:layout_width="match_parent"
+                        android:visibility="gone"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/l1"
+                        android:layout_marginEnd="@dimen/l1"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/WidgetFoundation.Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/l1"
+                android:layout_marginTop="@dimen/l1"
+                android:layout_marginEnd="@dimen/l1"
+                android:focusable="false">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            style="@style/WidgetFoundation.Icon"
+                            isSelected="@{viewModel.vpnRunning}"
+                            android:layout_marginStart="@dimen/l_25"
+                            app:srcCompat="@drawable/ic_check_circle_md2" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/l1"
+                            android:layout_weight="0.75"
+                            android:gravity="center_vertical"
+                            android:text="VPN Service"
+                            android:textAppearance="@style/AppearanceFoundation.Body"
+                            android:textStyle="bold" />
+
+                        <Button
+                            style="@style/WidgetFoundation.Button.Text.Secondary"
+                            goneUnless="@{viewModel.vpnRunning &amp;&amp; !viewModel.vpnStopping}"
+                            isEnabled="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="@{() -> viewModel.stopVPN()}"
+                            android:text="STOP" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/WidgetFoundation.Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_marginStart="@dimen/l1"
+                android:layout_marginTop="@dimen/l1"
+                android:layout_marginEnd="@dimen/l1"
+                android:focusable="false">
+
+                <TextView
+                    android:id="@+id/logs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:ellipsize="end"
+                    android:lines="10"
+                    android:textAppearance="@style/AppearanceFoundation.Caption"
+                    tools:text="@tools:sample/lorem/random"
+                    tools:visibility="visible" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/WidgetFoundation.Card"
+                gone="@{viewModel.notes.empty}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/l1"
+                android:layout_marginTop="@dimen/l1"
+                android:layout_marginEnd="@dimen/l1"
+                android:focusable="false">
+
+                <TextView
+                    android:id="@+id/notes"
+                    markdownText="@{viewModel.notes}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:textAppearance="@style/AppearanceFoundation.Caption"
+                    tools:maxLines="5"
+                    tools:text="@tools:sample/lorem/random"
+                    tools:visibility="visible" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+</layout>

@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">ilb</string>
+
+    <string name="root_status_ok">Root access is available.</string>
+    <string name="root_status_pending">Please wait…</string>
+    <string name="root_status_error">Root access is not available.</string>
+
+</resources>
