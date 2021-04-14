@@ -1,6 +1,6 @@
 package io.github.doorbash.ilb.core
 
-import com.topjohnwu.magisk.ui.theme.Theme
+import io.github.doorbash.ilb.theme.Theme
 
 object Config {
     var themeOrdinal = Theme.Piplup.ordinal

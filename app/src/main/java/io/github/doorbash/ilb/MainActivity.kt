@@ -7,8 +7,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
-import com.topjohnwu.magisk.ui.theme.Theme
-import io.github.doorbash.ilb.core.su.initSU
+import io.github.doorbash.ilb.theme.Theme
 
 
 class MainActivity : AppCompatActivity() {

@@ -4,13 +4,13 @@ import android.content.Context
 import android.util.Log
 import com.topjohnwu.superuser.BusyBoxInstaller
 import com.topjohnwu.superuser.Shell
-import io.github.doorbash.ilb.App
-import io.github.doorbash.ilb.App.Companion.PUBLIC_IP_API
 import io.github.doorbash.ilb.BuildConfig
+import io.github.doorbash.ilb.ktx.sharedPrefs
 import io.github.doorbash.ilb.model.PublicIP
+import io.github.doorbash.ilb.ui.fragments.settings.PREF_DEFAULT_PIP
+import io.github.doorbash.ilb.ui.fragments.settings.PREF_KEY_PIP
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.json.JSONObject
 import java.io.File
 import java.util.*
 
@@ -26,6 +26,7 @@ fun initSU() {
 }
 
 suspend fun findInternetConnections(context: Context): List<PublicIP> {
+    val publicIPApiUrl = context.sharedPrefs().getString(PREF_KEY_PIP,PREF_DEFAULT_PIP)
     Log.d(TAG, "foundInternetConnections()")
     return withContext(Dispatchers.Default) {
         val publicIpsFound: MutableList<String> = ArrayList()
@@ -126,7 +127,7 @@ suspend fun findInternetConnections(context: Context): List<PublicIP> {
                         Log.d(TAG, "fwmark = $fwmark")
                         val lib =
                             File(context.applicationInfo.nativeLibraryDir, "libilb.so")
-                        val result3 = Shell.su("$lib ip $PUBLIC_IP_API $fwmark").exec()
+                        val result3 = Shell.su("$lib ip $publicIPApiUrl $fwmark").exec()
                         for (line3 in result3.out) {
                             Log.d(TAG, "ip: $line3")
                             if (Utils.isIpv4(line3) && !publicIpsFound.contains(line3)) {
@@ -141,7 +142,7 @@ suspend fun findInternetConnections(context: Context): List<PublicIP> {
                 } else {
                     val lib = File(context.applicationInfo.nativeLibraryDir, "libilb.so")
                     val result2 =
-                        Shell.su("$lib ip $PUBLIC_IP_API 0x0").exec()
+                        Shell.su("$lib ip $publicIPApiUrl 0x0").exec()
                     for (line2 in result2.out) {
                         Log.d(TAG, "ip: $line2")
                         if (Utils.isIpv4(line2) /* && !publicIpsFound.contains(line2)*/) {

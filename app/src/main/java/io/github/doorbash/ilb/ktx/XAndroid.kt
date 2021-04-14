@@ -1,9 +1,13 @@
 package io.github.doorbash.ilb.ktx
 
 import android.app.Activity
+import android.content.Context
+import android.content.Context.MODE_PRIVATE
 import android.content.ContextWrapper
+import android.content.SharedPreferences
 import android.os.Build
 import android.text.PrecomputedText
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
@@ -19,10 +23,14 @@ import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
 import io.github.doorbash.ilb.MainActivity
 import io.github.doorbash.ilb.R
+import io.github.doorbash.ilb.SHARED_PREFS_NAME
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.lang.Exception
+
+private const val TAG = "XAndroid"
 
 fun ViewGroup.startAnimations() {
     val transition = AutoTransition()
@@ -110,4 +118,13 @@ fun TextView.blink() {
     anim.repeatMode = Animation.REVERSE
     anim.repeatCount = 3
     startAnimation(anim)
+}
+
+@BindingAdapter("isEnabled")
+fun setEnabled(view: View, isEnabled: Boolean) {
+    view.isEnabled = isEnabled
+}
+
+fun Context.sharedPrefs(): SharedPreferences {
+    return getSharedPreferences(SHARED_PREFS_NAME, MODE_PRIVATE)
 }

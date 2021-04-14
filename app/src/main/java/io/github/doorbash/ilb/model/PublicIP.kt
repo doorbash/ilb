@@ -18,20 +18,20 @@ class PublicIP {
     val prefixMask: Int get() = getSubnetMaskLength(Inet4Address.getByName(this.mask).address)
     val ipv4AndMask: String get() = "$ipv4/$prefixMask"
 
-    override fun equals(other: Any?): Boolean {
-        if (other is PublicIP) {
-            if (publicIPv4 != other.publicIPv4) return false
-            if (iface != other.iface) return false
-            if (mac != other.mac) return false
-            if (ipv4 != other.ipv4) return false
-            if (mask != other.mask) return false
-            if (mark != other.mark) return false
-            if (rx != other.rx) return false
-            if (tx != other.tx) return false
-            return true
-        }
-        return false
-    }
+//    override fun equals(other: Any?): Boolean {
+//        if (other is PublicIP) {
+//            if (publicIPv4 != other.publicIPv4) return false
+//            if (iface != other.iface) return false
+//            if (mac != other.mac) return false
+//            if (ipv4 != other.ipv4) return false
+//            if (mask != other.mask) return false
+//            if (mark != other.mark) return false
+//            if (rx != other.rx) return false
+//            if (tx != other.tx) return false
+//            return true
+//        }
+//        return false
+//    }
 
     fun clone(): PublicIP {
         return PublicIP().apply {

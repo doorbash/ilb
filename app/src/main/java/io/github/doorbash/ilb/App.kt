@@ -4,13 +4,9 @@ import android.app.Application
 import io.github.doorbash.ilb.core.su.initSU
 import io.github.doorbash.ilb.utils.AppBroadcastManager
 
+const val SHARED_PREFS_NAME = "prefs"
+
 class App: Application() {
-
-    companion object{
-        const val PUBLIC_IP_API = "https://api.ipify.org"
-        const val LOCAL_SOCKS5_SERVER_PORT = 8000
-    }
-
     override fun onCreate() {
         super.onCreate()
         initSU()

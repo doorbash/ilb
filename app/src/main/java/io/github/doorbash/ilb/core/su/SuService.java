@@ -36,8 +36,6 @@ import com.topjohnwu.superuser.ipc.RootService;
 
 import java.io.File;
 
-import static io.github.doorbash.ilb.App.LOCAL_SOCKS5_SERVER_PORT;
-
 public class SuService extends RootService implements Handler.Callback {
 
     public static final String TAG = "SuService";

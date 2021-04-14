@@ -4,25 +4,248 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="io.github.doorbash.ilb.ui.fragments.settings.SettingsViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/l1"
         tools:context=".ui.fragments.settings.SettingsFragment">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Settings"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginStart="@dimen/l1"
+            android:layout_marginEnd="@dimen/l1"
+            android:layout_marginBottom="@dimen/l_25"
+            android:animateLayoutChanges="true"
+            android:gravity="center_vertical">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/module_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="General"
+                android:textAppearance="@style/AppearanceFoundation.Large"
+                android:textColor="@color/color_primary_transient"
+                android:textStyle="bold"
+                tools:text="App" />
+
+            <Button
+                android:id="@+id/module_button"
+                style="@style/WidgetFoundation.Button.Text.Secondary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/l1"
+                android:textAllCaps="false"
+                android:visibility="invisible"
+                tools:text="Reboot" />
+
+        </LinearLayout>
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/WidgetFoundation.Card"
+            isEnabled="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/l1"
+            android:layout_marginEnd="@dimen/l1"
+            android:layout_marginBottom="@dimen/l1"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{() -> viewModel.itemPIPClicked()}"
+            tools:layout_gravity="center">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/l1"
+                android:paddingEnd="@dimen/l1">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/l1"
+                    android:paddingBottom="@dimen/l1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="start"
+                        android:text="Public IP API"
+                        android:textAppearance="@style/AppearanceFoundation.Body"
+                        android:textStyle="bold"
+                        tools:lines="1"
+                        tools:text="@tools:sample/lorem/random" />
+
+                    <TextView
+                        android:id="@+id/settings_pip_desc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.itemPipUrl}"
+                        android:textAppearance="@style/AppearanceFoundation.Tiny.Variant"
+                        android:visibility="visible"
+                        tools:lines="2"
+                        tools:text="@tools:sample/lorem/random" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/l1"
+            android:layout_marginEnd="@dimen/l1"
+            android:layout_marginBottom="@dimen/l_25"
+            android:animateLayoutChanges="true"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="VPN Service"
+                android:textAppearance="@style/AppearanceFoundation.Large"
+                android:textColor="@color/color_primary_transient"
+                android:textStyle="bold"
+                tools:text="App" />
+
+            <Button
+                style="@style/WidgetFoundation.Button.Text.Secondary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/l1"
+                android:textAllCaps="false"
+                android:visibility="invisible"
+                tools:text="Reboot" />
+
+        </LinearLayout>
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/WidgetFoundation.Card"
+            isEnabled="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/l1"
+            android:layout_marginEnd="@dimen/l1"
+            android:layout_marginBottom="@dimen/l_25"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{() -> viewModel.itemDns1Clicked()}"
+            tools:layout_gravity="center">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/l1"
+                android:paddingEnd="@dimen/l1">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/l1"
+                    android:paddingBottom="@dimen/l1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="start"
+                        android:text="Dns 1"
+                        android:textAppearance="@style/AppearanceFoundation.Body"
+                        android:textStyle="bold"
+                        tools:lines="1"
+                        tools:text="@tools:sample/lorem/random" />
+
+                    <TextView
+                        android:id="@+id/settings_dns1_desc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.itemDns1}"
+                        android:textAppearance="@style/AppearanceFoundation.Tiny.Variant"
+                        android:visibility="visible"
+                        tools:lines="2"
+                        tools:text="@tools:sample/lorem/random" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/WidgetFoundation.Card"
+            isEnabled="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/l1"
+            android:layout_marginEnd="@dimen/l1"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{() -> viewModel.itemDns2Clicked()}"
+            tools:layout_gravity="center">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/l1"
+                android:paddingEnd="@dimen/l1">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/l1"
+                    android:paddingBottom="@dimen/l1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="start"
+                        android:text="Dns 2"
+                        android:textAppearance="@style/AppearanceFoundation.Body"
+                        android:textStyle="bold"
+                        tools:lines="1"
+                        tools:text="@tools:sample/lorem/random" />
+
+                    <TextView
+                        android:id="@+id/settings_dns2_desc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.itemDns2}"
+                        android:textAppearance="@style/AppearanceFoundation.Tiny.Variant"
+                        android:visibility="visible"
+                        tools:lines="2"
+                        tools:text="@tools:sample/lorem/random" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
 </layout>

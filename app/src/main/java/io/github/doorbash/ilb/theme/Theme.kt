@@ -1,4 +1,4 @@
-package com.topjohnwu.magisk.ui.theme
+package io.github.doorbash.ilb.theme
 
 import io.github.doorbash.ilb.R
 import io.github.doorbash.ilb.core.Config

@@ -1,5 +1,5 @@
 # ILB (Internet Load Balancer)
-Use both WiFi and Mobile data on your Android Phone at the same time to connect internet! **(Requires root access)**
+Use both WiFi and Mobile data on your Android Phone at the same time to connect internet. **(Requires root access)**
 
 ## How it works?
 ILB simply tries to find out what packet marks will end up getting routed to different network connections, then runs a local proxy server that marks outgoing packets (this is the part where root access is needed) to balance traffic between interfaces.
@@ -14,8 +14,6 @@ ILB simply tries to find out what packet marks will end up getting routed to dif
 * To start development, open the project with Android Studio.
 
 ## Todo
-* Icon
-* Settings
 * Logs
 * Per-app VPN
 

@@ -13,26 +13,25 @@
 set GOOS=android
 set CGO_ENABLED=1
 
-CALL :build_module ilb
+@REM CALL :build_module ilb
 
 cd src\tun2socks
-go mod tidy
 go get -d ./...
 gomobile bind -a -ldflags "-s -w" -target=android -o ..\..\..\app\libs\tun2socks.aar
 cd ..\..
 
-set NDK_PROJECT_PATH=src\busybox
-cmd /c ndk-build clean
-cmd /c ndk-build
+@REM set NDK_PROJECT_PATH=src\busybox
+@REM cmd /c ndk-build clean
+@REM cmd /c ndk-build
 
-del ..\app\src\main\jniLibs\arm64-v8a\libbusybox.so > nul 2> nul
-move src\busybox\libs\arm64-v8a\busybox ..\app\src\main\jniLibs\arm64-v8a\libbusybox.so > nul
-del ..\app\src\main\jniLibs\armeabi-v7a\libbusybox.so > nul 2> nul
-move src\busybox\libs\armeabi-v7a\busybox ..\app\src\main\jniLibs\armeabi-v7a\libbusybox.so > nul
-del ..\app\src\main\jniLibs\x86_64\libbusybox.so > nul 2> nul
-move src\busybox\libs\x86_64\busybox ..\app\src\main\jniLibs\x86_64\libbusybox.so > nul
-del ..\app\src\main\jniLibs\x86\libbusybox.so > nul 2> nul
-move src\busybox\libs\x86\busybox ..\app\src\main\jniLibs\x86\libbusybox.so > nul
+@REM del ..\app\src\main\jniLibs\arm64-v8a\libbusybox.so > nul 2> nul
+@REM move src\busybox\libs\arm64-v8a\busybox ..\app\src\main\jniLibs\arm64-v8a\libbusybox.so > nul
+@REM del ..\app\src\main\jniLibs\armeabi-v7a\libbusybox.so > nul 2> nul
+@REM move src\busybox\libs\armeabi-v7a\busybox ..\app\src\main\jniLibs\armeabi-v7a\libbusybox.so > nul
+@REM del ..\app\src\main\jniLibs\x86_64\libbusybox.so > nul 2> nul
+@REM move src\busybox\libs\x86_64\busybox ..\app\src\main\jniLibs\x86_64\libbusybox.so > nul
+@REM del ..\app\src\main\jniLibs\x86\libbusybox.so > nul 2> nul
+@REM move src\busybox\libs\x86\busybox ..\app\src\main\jniLibs\x86\libbusybox.so > nul
 
 goto :eof
 

@@ -7,10 +7,14 @@ import android.net.*
 import android.os.*
 import android.util.Log
 import com.topjohnwu.superuser.ipc.RootService
-import io.github.doorbash.ilb.App.Companion.LOCAL_SOCKS5_SERVER_PORT
 import io.github.doorbash.ilb.core.su.SuConnection
 import io.github.doorbash.ilb.core.su.SuService
 import io.github.doorbash.ilb.core.su.SuServiceApi
+import io.github.doorbash.ilb.ktx.sharedPrefs
+import io.github.doorbash.ilb.ui.fragments.settings.PREF_DEFAULT_DNS1
+import io.github.doorbash.ilb.ui.fragments.settings.PREF_DEFAULT_DNS2
+import io.github.doorbash.ilb.ui.fragments.settings.PREF_KEY_DNS1
+import io.github.doorbash.ilb.ui.fragments.settings.PREF_KEY_DNS2
 import io.github.doorbash.ilb.utils.AppBroadcastManager
 import io.github.doorbash.ilb.utils.AppBroadcastManager.Companion.EVENT_VPN_PING
 import io.github.doorbash.ilb.utils.AppBroadcastManager.Companion.EVENT_VPN_PONG
@@ -56,8 +60,8 @@ open class ILBVpnService : VpnService() {
                 val builder = Builder().setSession("ilb")
                     .setMtu(1500)
                     .addAddress("192.168.56.1", 24)
-                    .addDnsServer("8.8.8.8")
-                    .addDnsServer("1.1.1.1")
+                    .addDnsServer(applicationContext.sharedPrefs().getString(PREF_KEY_DNS1, PREF_DEFAULT_DNS1)!!)
+                    .addDnsServer(applicationContext.sharedPrefs().getString(PREF_KEY_DNS2, PREF_DEFAULT_DNS2)!!)
                     .addRoute("0.0.0.0", 0)
                     .setBlocking(true)
 
@@ -73,9 +77,7 @@ open class ILBVpnService : VpnService() {
                         Service(this),
                         Flow(outputStream),
                         socket,
-                        marks,
-                        "127.0.0.1",
-                        LOCAL_SOCKS5_SERVER_PORT.toLong()
+                        marks
                     )
 
                     AppBroadcastManager.emitEvent(EVENT_VPN_STARTED)

@@ -124,9 +124,9 @@ class HomeFragment : BaseUIFragment<FragmentHomeBinding>(R.layout.fragment_home)
                 activity?.invalidateOptionsMenu()
             }
         }
-        viewModel.rootStatus.observe(viewLifecycleOwner) {
-            binding.rootNoticeText.blink()
-        }
+//        viewModel.rootStatus.observe(viewLifecycleOwner) {
+//            binding.rootNoticeText.blink()
+//        }
         viewModel.vpnRunning.observe(viewLifecycleOwner) {
             activity?.invalidateOptionsMenu()
         }

@@ -21,7 +21,7 @@ var isStopped = false
 var marks []int64
 var tcpIndex int = 0
 var udpIndex int = 0
-var markFile string
+var socketAddr string
 
 type VpnService interface {
 	Protect(fd int) bool
@@ -56,7 +56,7 @@ func protectFd(s VpnService, fd int) error {
 }
 
 func markFd(fd int, mark int64) error {
-	via, err := net.Dial("unix", markFile)
+	via, err := net.Dial("unix", socketAddr)
 	if err != nil {
 		return err
 	}
@@ -99,17 +99,17 @@ func markFd(fd int, mark int64) error {
 	return nil
 }
 
-func Start(serv VpnService, packetFlow PacketFlow, markF string, m string, proxyHost string, proxyPort int) {
+func Start(serv VpnService, packetFlow PacketFlow, socketAddress string, marksStr string) {
 	if packetFlow != nil {
 		isStopped = false
 		tcpIndex = 0
 		udpIndex = 0
 		vpnService = serv
-		markFile = markF
+		socketAddr = socketAddress
 
 		lwipStack = core.NewLWIPStack()
 
-		m := strings.Split(m, " ")
+		m := strings.Split(marksStr, " ")
 		marks = make([]int64, 0)
 		for _, v := range m {
 			mark, e := strconv.ParseInt(v, 0, 64)

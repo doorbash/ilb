@@ -9,6 +9,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 abstract class AppBroadcastManager {
     companion object {
         const val EVENT_FIND_INTERNET_CONNECTIONS = "find_internet_connections"
+
         const val EVENT_VPN_START = "vpn_start"
         const val EVENT_VPN_STOP = "vpn_stop"
         const val EVENT_VPN_STOPPED = "vpn_stopped"
@@ -16,6 +17,10 @@ abstract class AppBroadcastManager {
         const val EVENT_VPN_START_ERROR = "vpn_start_err"
         const val EVENT_VPN_PING = "ping"
         const val EVENT_VPN_PONG = "pong"
+
+        const val EVENT_SHOW_DIALOG_PIP = "show_pip"
+        const val EVENT_SHOW_DIALOG_DNS1 = "show_dns1"
+        const val EVENT_SHOW_DIALOG_DNS2 = "show_dns2"
 
         var instance: LocalBroadcastManager? = null
 

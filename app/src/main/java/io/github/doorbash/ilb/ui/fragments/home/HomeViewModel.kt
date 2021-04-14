@@ -65,17 +65,17 @@ class HomeViewModel : ViewModel() {
 
     fun checkRootAccess() {
         Log.d(TAG, "checking root access...")
-        rootStatus.value = RootStatus.PENDING
+        rootStatus.postValue(RootStatus.PENDING)
 
         if (!Shell.rootAccess()) MainShell.mainShell = null
         if (Shell.rootAccess()) {
             Log.d(TAG, "[!] Root is available.")
-            rootStatus.value = RootStatus.OK
+            rootStatus.postValue(RootStatus.OK)
 
             publicIPsLoadingState.postValue(PublicIpsState.IDLE)
         } else {
             Log.d(TAG, "[!] Root is not available.")
-            rootStatus.value = RootStatus.ERROR
+            rootStatus.postValue(RootStatus.ERROR)
         }
     }
 
@@ -101,7 +101,6 @@ class HomeViewModel : ViewModel() {
     }
 
     fun foundInternetConnections(list: List<PublicIP>) {
-//        publicIps.postValue(list)
         when {
             list.isEmpty() -> {
                 publicIPsLoadingState.postValue(PublicIpsState.ERROR)
